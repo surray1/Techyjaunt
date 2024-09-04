@@ -69,16 +69,24 @@
 //         //  filterByGrade(student5)
 //         //  filterByGrade(student6)
 
-        const numbers = [20, 30 ,40, 15, 13, 45, 60 ];
-         const averageAge= (numbers) =>{
-        let sum = 0;
-        for( const i = 0; i < numbers.length; i++){
-             sum += numbers[i];
+    //     const numbers = [20, 30 ,40, 15, 13, 45, 60 ];
+    //      const averageAge= (numbers) =>{
+    //     let sum = 0;
+    //     for( const i = 0; i < numbers.length; i++){
+    //          sum += numbers[i];
              
-        }
-           return (sum / numbers.length);
-    }      
-        console.log(averageAge(numbers));
+    //     }
+    //        return (sum / numbers.length);
+    // }      
+    //     console.log(averageAge(numbers));
+
+   const averageAge = [20, 30 ,40, 15, 13, 45, 60 ];
+  
+             
+        const numbers = averageAge.reduce((num)=> num + num);
+        console.log(numbers)
+        const sum = (numbers / averageAge.length);
+        console.log(sum);
            
              
         
