@@ -1,0 +1,152 @@
+class Book{
+    constructor(title, author, isbn){
+        this.title = title;
+        this.author = author;
+        this.isbn   = isbn;
+        this.available= true; 
+        
+  
+    }
+
+    borrowBook(){
+        
+       if(this.available){
+        this.available = false;
+        return  `The ${this.title} by ${this.author} with isbn ${this.isbn} has been borrowed`;
+        }
+        else{
+        return `The ${this.title} by ${this.author} with isbn ${this.isbn} is not available`;
+        }
+    }
+
+    returnBook(){
+      this.available = true;  
+       return  `The ${this.title} by ${this.author} with isbn ${this.isbn} has been borrowed`;
+    }
+        
+
+}
+  
+//   const myBook = new Book("Eloquent Javascript", "Marijn Haverbeke", "2041045523");
+//   console.log(myBook.borrowBook());
+//   console.log(myBook.borrowBook());
+//   console.log(myBook.returnBook());
+
+class Library {
+    constructor() {
+      this.booksLibrary = [];
+    }
+  
+    addBook(newBook) {
+      const checkIfBookExist = this.booksLibrary.find(b => b.isbn === newBook.isbn);
+      if (checkIfBookExist) {
+        throw new Error(` "${title}" Book with this ISBN "${isbn}" already exists.`);    
+      }
+      this.booksLibrary.push(newBook);
+      return 
+    }
+  
+    findBookByTitle(title) {
+      const book = this.booksLibrary.find(b => b.title === title);
+      if (!book) {
+        throw new Error(`Book with the title "${title}" not found.`);
+      }
+      return book;
+    }
+  
+    removeBook(isbn) {
+      const fetchIndex = this.booksLibrary.findIndex(b => b.isbn === isbn);
+      if (fetchIndex === -1) {
+        throw new Error(`Book with ISBN "${isbn}" not found.`);
+      }
+      this.booksLibrary.splice(fetchIndex, 1);
+    }
+  }
+  
+  
+     const book1 = new Book('2041045523', 'Eloquent Javascript', 'by Marijn Harverbeke');
+     const book2 = new Book(' 978-0596805524 ', 'Definitive Guide', 'David Flanagan');
+     console.log("Eloquent Javascript has been added");
+  
+  const library = new Library();
+  
+
+  library.addBook(book1);
+  library.addBook(book2);
+  
+  
+  try {
+    const foundBook = library.findBookByTitle('Definitive Guide');
+    console.log(`Found Book: ${foundBook.title} by ${foundBook.author} with ${foundBook.isbn}`);
+  } catch (error) {
+    console.error(error.message);
+  }
+  
+  
+  try {
+    library.removeBook('2041045523');
+    console.log('Book removed successfully');
+  } catch (error) {
+    console.error(error.message);
+  }
+  
+
+  try {
+    library.findBookByTitle('Eloquent Javascript');
+  } catch (error) {
+    console.error(error.message);
+  }
+
+class DigitalLibrary extends Library {
+    constructor() {
+      super();
+      this.downloadableBooks = new Set(); 
+    }
+
+   addBook(book, isDownloadable = false) {
+    super.addBook(book);
+    if (isDownloadable) {
+      this.downloadableBooks.add(book.isbn);
+    }
+   }
+
+   downloadBook(isbn) {
+    if (!this.downloadableBooks.has(isbn)) {
+      throw new Error('This Book is not available');
+    }
+
+    const book = this.books.find(book => book.isbn === isbn);
+    if (!book) {
+      throw new Error('ISBN not exist');
+    }
+
+    console.log(`Downloading book........ ${book.title} by ${book.author} with ${book.isbn}`);
+    
+    return book;
+  } 
+}
+const book11 = new Book('2041045523', 'Eloquent Javascript', 'by Marijn Harverbeke');
+const book22 = new Book(' 978-0596805524 ', 'Definitive Guide', 'David Flanagan');
+
+const digitalLibrary = new DigitalLibrary();
+
+
+try {
+  digitalLibrary.addBook(book11, true); 
+  digitalLibrary.addBook(book22); // This will not be downloaded
+  console.log('Books added successfully');
+} catch (error) {
+  console.error(error.message);
+}
+
+try {
+  digitalLibrary.downloadBook('2041045523');
+} catch (error) {
+  console.error(error.message);
+}
+
+try {
+  digitalLibrary.downloadBook('978-0596805524'); 
+} catch (error) {
+  console.error(error.message);
+}
